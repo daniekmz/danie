@@ -1,17 +1,11 @@
-// Import library untuk koneksi database
-const { Pool } = require('pg');
-
-// Konfigurasi koneksi database (ganti dengan connection string Anda)
-const pool = new Pool({
-    connectionString: process.env.POSTGRES_URL,
-});
+// Simpan komentar dalam array (sementara)
+let comments = [];
 
 // Handler untuk GET (mengambil komentar)
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const result = await pool.query('SELECT * FROM comments ORDER BY timestamp DESC');
-            res.status(200).json(result.rows);
+            res.status(200).json(comments);
         } catch (error) {
             res.status(500).json({ error: 'Gagal mengambil komentar' });
         }
@@ -23,10 +17,12 @@ export default async function handler(req, res) {
         }
 
         try {
-            await pool.query(
-                'INSERT INTO comments (name, comment, timestamp) VALUES ($1, $2, NOW())',
-                [name, comment]
-            );
+            const newComment = {
+                name,
+                comment,
+                timestamp: new Date().toISOString(),
+            };
+            comments.push(newComment); // Simpan komentar ke array
             res.status(201).json({ message: 'Komentar berhasil disimpan!' });
         } catch (error) {
             res.status(500).json({ error: 'Gagal menyimpan komentar' });
