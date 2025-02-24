@@ -40,6 +40,27 @@ document.getElementById('openBirthdayTab').addEventListener('click', () => {
     window.open('danie.html', '_blank');
 });
 
+// Fungsi untuk menambahkan komentar
+function addComment(name, comment) {
+    const commentList = document.getElementById('commentList');
+
+    // Buat elemen komentar baru
+    const commentItem = document.createElement('div');
+    commentItem.classList.add('comment-item');
+    commentItem.innerHTML = `
+        <strong>${name}</strong>
+        <p>${comment}</p>
+    `;
+
+    // Tambahkan komentar ke daftar
+    commentList.appendChild(commentItem);
+
+    // Simpan komentar ke localStorage
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    comments.push({ name, comment });
+    localStorage.setItem('comments', JSON.stringify(comments));
+}
+
 // Fungsi untuk mengambil komentar dari API
 async function loadComments() {
     try {
