@@ -1,5 +1,5 @@
 // URL API Vercel (ganti dengan URL deployment Anda)
-const API_URL = 'https://your-vercel-app.vercel.app/api/comments';
+const API_URL = 'daniee.vercel.app/api/comments';
 
 // Tanggal ulang tahun (format: Tahun, Bulan-1, Hari, Jam, Menit, Detik)
 const birthday = new Date(2023, 11, 25, 0, 0, 0); // Contoh: 25 Desember 2023
