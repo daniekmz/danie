@@ -1,8 +1,8 @@
 // URL API Vercel (ganti dengan URL deployment Anda)
-const API_URL = 'daniee.vercel.appp/api/comments';
+const API_URL = 'https://your-vercel-app.vercel.app/api/comments';
 
 // Tanggal ulang tahun (format: Tahun, Bulan-1, Hari, Jam, Menit, Detik)
-const birthday = new Date(2025, 02, 19, 7, 0, 0); // Contoh: 19 maret 2023
+const birthday = new Date(2023, 11, 25, 0, 0, 0); // Contoh: 25 Desember 2023
 
 function updateCountdown() {
     const now = new Date();
@@ -91,5 +91,3 @@ document.getElementById('commentForm').addEventListener('submit', (e) => {
 
 // Muat komentar saat halaman dimuat
 window.addEventListener('load', loadComments);
-
-
