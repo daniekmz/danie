@@ -117,3 +117,31 @@ document.getElementById('commentForm').addEventListener('submit', (e) => {
 
 // Muat komentar saat halaman dimuat
 window.addEventListener('load', loadComments);
+
+// Fungsi untuk menampilkan pop-up
+function showPopup() {
+    const popup = document.getElementById('popup');
+    popup.classList.remove('hidden');
+    setTimeout(() => {
+        popup.classList.add('hidden');
+    }, 3000); // Pop-up hilang setelah 3 detik
+}
+
+// Muat komentar saat halaman dimuat
+window.addEventListener('load', loadComments);
+
+// Fungsi untuk memuat komentar dari localStorage
+function loadComments() {
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    const commentList = document.getElementById('commentList');
+
+    comments.forEach(comment => {
+        const commentItem = document.createElement('div');
+        commentItem.classList.add('comment-item');
+        commentItem.innerHTML = `
+            <strong>${comment.name}</strong>
+            <p>${comment.comment}</p>
+        `;
+        commentList.appendChild(commentItem);
+    });
+}
