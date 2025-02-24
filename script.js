@@ -2,7 +2,7 @@
 const API_URL = 'https://danie-xi.vercel.app/api/comments';
 
 // Tanggal ulang tahun (format: Tahun, Bulan-1, Hari, Jam, Menit, Detik)
-const birthday = new Date(2025, 01, 19, 7, 0, 0); // Contoh: 19 maret 2023
+const birthday = new Date(2025, 02, 19, 7, 0, 0); // Contoh: 19 maret 2023
 
 function updateCountdown() {
     const now = new Date();
