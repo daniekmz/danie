@@ -1,8 +1,4 @@
-// URL API Vercel (ganti dengan URL deployment Anda)
-const API_URL = 'daniee.vercel.app/api/comments';
-
-// Tanggal ulang tahun (format: Tahun, Bulan-1, Hari, Jam, Menit, Detik)
-const birthday = new Date(2023, 11, 25, 0, 0, 0); // Contoh: 25 Desember 2023
+const birthday = new Date(2025, 02, 19, 7, 0, 0); // Contoh: 19 maret 2023
 
 function updateCountdown() {
     const now = new Date();
@@ -35,44 +31,10 @@ function updateCountdown() {
 const interval = setInterval(updateCountdown, 1000);
 updateCountdown();
 
-// Fungsi untuk mengambil komentar dari API
-async function loadComments() {
-    try {
-        const response = await fetch(API_URL);
-        const comments = await response.json();
-        const commentList = document.getElementById('commentList');
-        commentList.innerHTML = ''; // Kosongkan daftar sebelum menambahkan komentar baru
-        comments.forEach(comment => {
-            const commentItem = document.createElement('div');
-            commentItem.classList.add('comment-item');
-            commentItem.innerHTML = `
-                <strong>${comment.name}:</strong>
-                <p>${comment.comment}</p>
-            `;
-            commentList.appendChild(commentItem);
-        });
-    } catch (error) {
-        console.error('Gagal mengambil komentar: ', error);
-    }
-}
-
-// Fungsi untuk mengirim komentar ke API
-async function addComment(name, comment) {
-    try {
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, comment }),
-        });
-        const result = await response.json();
-        console.log(result.message);
-        loadComments(); // Muat ulang komentar setelah mengirim
-    } catch (error) {
-        console.error('Gagal menyimpan komentar: ', error);
-    }
-}
+// Event listener untuk tombol
+document.getElementById('openBirthdayTab').addEventListener('click', () => {
+    window.open('danie.html', '_blank');
+});
 
 // Event listener untuk form komentar
 document.getElementById('commentForm').addEventListener('submit', (e) => {
@@ -83,11 +45,59 @@ document.getElementById('commentForm').addEventListener('submit', (e) => {
 
     if (name && comment) {
         addComment(name, comment);
-        document.getElementById('commentForm').reset();
+        document.getElementById('commentForm').reset(); // Reset form
+        showPopup(); // Tampilkan pop-up
     } else {
         alert('Nama dan komentar tidak boleh kosong!');
     }
 });
 
+// Fungsi untuk menambahkan komentar
+function addComment(name, comment) {
+    const commentList = document.getElementById('commentList');
+
+    // Buat elemen komentar baru
+    const commentItem = document.createElement('div');
+    commentItem.classList.add('comment-item');
+    commentItem.innerHTML = `
+        <strong>${name}</strong>
+        <p>${comment}</p>
+    `;
+
+    // Tambahkan komentar ke daftar
+    commentList.appendChild(commentItem);
+
+    // Simpan komentar ke localStorage
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    comments.push({ name, comment });
+    localStorage.setItem('comments', JSON.stringify(comments));
+}
+
+// Fungsi untuk menampilkan pop-up
+function showPopup() {
+    const popup = document.getElementById('popup');
+    popup.classList.remove('hidden');
+    setTimeout(() => {
+        popup.classList.add('hidden');
+    }, 3000); // Pop-up hilang setelah 3 detik
+}
+
 // Muat komentar saat halaman dimuat
 window.addEventListener('load', loadComments);
+
+// Fungsi untuk memuat komentar dari localStorage
+function loadComments() {
+    const comments = JSON.parse(localStorage.getItem('comments')) || [];
+    const commentList = document.getElementById('commentList');
+
+    comments.forEach(comment => {
+        const commentItem = document.createElement('div');
+        commentItem.classList.add('comment-item');
+        commentItem.innerHTML = `
+            <strong>${comment.name}</strong>
+            <p>${comment.comment}</p>
+        `;
+        commentList.appendChild(commentItem);
+    });
+}
+}
